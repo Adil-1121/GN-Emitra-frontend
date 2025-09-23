@@ -1,9 +1,8 @@
 import React from "react";
 import './single.scss'
-import Navbar from '../../core/components/common-components/navbar/navbar';
-import Sidebar from '../../core/components/common-components/sidebar/sidebar';
-import Breadcrumb from '../../core/components/common-components/breadcrumb/Breadcrumb';
-
+import Navbar from "../../components/common-components/navbar/navbar";
+import Sidebar from "../../components/common-components/sidebar/sidebar";
+import Breadcrumb from "../../components/common-components/breadcrumb/Breadcrumb";
 const Single = () => {
     return (
         <div className="single">

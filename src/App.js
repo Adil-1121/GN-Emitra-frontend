@@ -1,8 +1,9 @@
-import Home from './modules/home/Home';
-import Login from './modules/login/Login';
-import New from './modules/new/New';
-import Single from './modules/single/Single';
-import List from './modules/list/List';
+import Home from './core/modules/home/Home';
+import Login from './core/modules/login/Login';
+import New from './core/modules/new/New';
+import Single from './core/modules/single/Single';
+import List from './core/modules/list/List';
+
 
 import {
   BrowserRouter,

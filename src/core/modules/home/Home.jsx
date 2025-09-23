@@ -1,16 +1,19 @@
 import React from "react";
 import './home.scss'
-import Navbar from '../../core/components/common-components/navbar/navbar';
-import Sidebar from '../../core/components/common-components/sidebar/sidebar';
-import Breadcrumb from '../../core/components/common-components/breadcrumb/Breadcrumb';
-import Widget from "../../core/components/dashboard/widget/widget";
-import Featured from "../../core/components/dashboard/featured/Featured";
-import Chart from "../../core/components/dashboard/chart/Chart";
-import Table from "../../core/components/dashboard/table/Table";
-import DateFilter from "../../core/components/dashboard/dateFilter/DateFilter";
-import ChatBot from '../../core/components/common-components/ai-chatbot/Chatbot';
-// If DateFilter is here
+// Go up to 'src/core' first, then into components
+import Navbar from "../../components/common-components/navbar/navbar";
+import Sidebar from "../../components/common-components/sidebar/sidebar";
+import Breadcrumb from "../../components/common-components/breadcrumb/Breadcrumb";
 
+import Widget from "../../components/dashboard/widget/widget";
+import Featured from "../../components/dashboard/featured/Featured";
+import Chart from "../../components/dashboard/chart/Chart";
+import Table from "../../components/dashboard/table/Table";
+import DateFilter from "../../components/dashboard/dateFilter/DateFilter";
+
+import ChatBot from "../../components/common-components/ai-chatbot/Chatbot";
+
+// If DateFilter is here
 const Home = () => {
     return (
         <div className="home">

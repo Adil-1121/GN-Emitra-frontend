@@ -1,9 +1,9 @@
 import React from "react";
 import './list.scss'
-import Navbar from '../../core/components/common-components/navbar/navbar';
-import Sidebar from '../../core/components/common-components/sidebar/sidebar';
-import Breadcrumb from '../../core/components/common-components/breadcrumb/Breadcrumb';
-import DataTable from "../../core/components/users/datatable/DataTable";
+import Navbar from "../../components/common-components/navbar/navbar";
+import Sidebar from "../../components/common-components/sidebar/sidebar";
+import Breadcrumb from "../../components/common-components/breadcrumb/Breadcrumb";
+import DataTable from "../../components/users/datatable/DataTable"
 
 const List = () => {
     return (
