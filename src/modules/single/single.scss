@@ -1,0 +1,24 @@
+.single {
+    margin-left: 250px;
+    display: flex;
+    padding-top: 60px;
+    overflow-x: hidden; // Prevent horizontal scroll
+
+    .singleContainer {
+        flex: 6;
+    }
+
+    .top {
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+
+        .left {
+            flex: 1;
+        }
+
+        .right {
+            flex: 2;
+        }
+    }
+}

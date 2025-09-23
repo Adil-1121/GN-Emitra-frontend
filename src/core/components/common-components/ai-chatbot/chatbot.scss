@@ -1,0 +1,196 @@
+// src/components/chatbot.scss
+
+.chatbot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+
+    &__toggle {
+        background-color: rebeccapurple;
+        color: white;
+        padding: 13px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+        &:hover {
+            background-color: #5e3b90;
+        }
+
+        svg {
+            font-size: 24px;
+        }
+    }
+
+    &__window {
+        width: 350px;
+        height: 460px;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        animation: fadeInUp 0.3s ease;
+    }
+
+    &__header {
+        background-color: rebeccapurple;
+        color: white;
+        padding: 12px 16px;
+        font-weight: bold;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+
+        h4 {
+            margin: 0;
+        }
+
+        .chatbot__close-btn {
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            svg {
+                font-size: 22px;
+                color: white;
+            }
+
+            &:hover {
+                color: #ccc;
+            }
+        }
+    }
+
+    &__messages {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        background: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &__message-wrapper {
+        display: flex;
+        align-items: flex-end;
+
+        &.bot {
+            flex-direction: row;
+        }
+
+        &.user {
+            flex-direction: row-reverse;
+        }
+    }
+
+    &__avatar {
+        background: #ddd;
+        border-radius: 50%;
+        padding: 6px;
+        margin: 0 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            color: rebeccapurple;
+            font-size: 20px;
+        }
+    }
+
+    &__message {
+        max-width: 70%;
+        padding: 10px 14px;
+        border-radius: 18px;
+        font-size: 14px;
+        line-height: 1.4;
+        width: fit-content;
+
+        &.bot {
+            background-color: #ece7f5;
+            color: #333;
+        }
+
+        &.user {
+            background-color: rebeccapurple;
+            color: white;
+        }
+    }
+
+    &__input-area {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+        background-color: #fff;
+
+        .chatbot__input-wrapper {
+            position: relative;
+            flex: 1;
+
+            input {
+                width: 80%;
+                padding: 10px 12px 10px 38px; // extra left padding for icon
+                border: 1px solid #ccc;
+                border-radius: 20px;
+                outline: none;
+                font-size: 14px;
+            }
+
+            .chatbot__input-icon {
+                position: absolute;
+                top: 50%;
+                left: 12px;
+                transform: translateY(-50%);
+                color: #888;
+                font-size: 18px;
+            }
+        }
+
+        button {
+            background: rebeccapurple;
+            color: white;
+            border: none;
+            margin-left: 8px;
+            padding: 7px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                background-color: #5e3b90;
+            }
+
+            svg {
+                font-size: 20px;
+            }
+        }
+    }
+
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
