@@ -31,7 +31,7 @@ const Home = () => {
                 </div>
                 <div className="charts">
                     <Featured />
-                    <Chart />
+                    <Chart height={300} width="100%" title={"Last 6 Month (Revenue)"} />
 
                 </div>
                 <div className="listContainer">

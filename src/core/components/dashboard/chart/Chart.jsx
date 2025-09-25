@@ -19,11 +19,12 @@ const data = [
     { name: 'June', total: 2390 },
 ];
 
-const Chart = () => {
+const Chart = ({ height, width, title }) => {
     return (
         <div className="chart">
-            <div className="title">Last 6 Month (Revenue)</div>
-            <ResponsiveContainer width="100%" height={300}>
+            <div className="title">{title}</div>
+            <ResponsiveContainer width={width} height={height}>
+                {/*  */}
                 <AreaChart
                     data={data}
                     margin={{ top: 10, right: 30, left: 0, bottom: 0 }}

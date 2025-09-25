@@ -15,7 +15,7 @@ import logo from '../../../../assets/logo.png';
 import avatar from '../../../../assets/avatar.png';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import { Link } from "react-router-dom";
 const Sidebar = () => {
     const [portfolioOpen, setPortfolioOpen] = useState(false);
 
@@ -26,19 +26,24 @@ const Sidebar = () => {
     return (
         <div className="sidebar">
             <div className="top">
-                <span className="logo">
-                    <img src={logo} className="avatar" alt="Logo" />
-                    ADMIN PANEL
-                </span>
+                <Link to="/" style={{ textDecoration: "none" }}>
+                    <span className="logo">
+                        <img src={logo} className="avatar" alt="Logo" />
+                        ADMIN PANEL
+                    </span></Link>
+
             </div>
             <hr />
             <div className="center">
                 <ul>
                     <p className="title">MAIN</p>
-                    <li className="active">
-                        <DashboardIcon className="icon" />
-                        <span>Dashboard</span>
-                    </li>
+                    <Link to="/" style={{ textDecoration: "none" }}>
+
+                        <li className="active">
+                            <DashboardIcon className="icon" />
+                            <span>Dashboard</span>
+                        </li>
+                    </Link>
 
                     <p className="title">LISTS</p>
 
@@ -55,10 +60,11 @@ const Sidebar = () => {
                     </li>
 
                     {portfolioOpen && (
-                        <>
+                        <>                <Link to="/users" style={{ textDecoration: "none" }}>
+
                             <li className="submenu">
                                 <span>About</span>
-                            </li>
+                            </li></Link>
                             <li className="submenu">
                                 <span>Services</span>
                             </li>
@@ -70,12 +76,13 @@ const Sidebar = () => {
                             </li>
                         </>
                     )}
+                    <Link to="/users" style={{ textDecoration: "none" }}>
 
-                    <li>
-                        <GroupIcon className="icon" />
-                        <span>Users</span>
-                        <KeyboardArrowRightIcon className="arrowIcon" />
-                    </li>
+                        <li>
+                            <GroupIcon className="icon" />
+                            <span>Users</span>
+                            <KeyboardArrowRightIcon className="arrowIcon" />
+                        </li></Link>
                     <li>
                         <BuildIcon className="icon" />
                         <span>Services</span>

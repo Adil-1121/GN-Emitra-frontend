@@ -11,6 +11,7 @@ import {
   Route,
   Outlet,
 } from 'react-router-dom';
+import { userInputs } from './formSource';
 
 function UsersLayout() {
   return <Outlet />; // Placeholder for nested routes under /users
@@ -28,7 +29,7 @@ function App() {
           <Route path="users">
             <Route index element={<List />} />
             <Route path=":userId" element={<Single />} />
-            <Route path="new" element={<New />} />
+            <Route path="new" element={<New inputs={userInputs} />} />
           </Route>
           <Route path="products">
             <Route index element={<List />} />
@@ -43,3 +44,5 @@ function App() {
 }
 
 export default App;
+
+// 2:37:00
