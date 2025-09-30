@@ -1,97 +1,107 @@
 import React, { useState, useRef } from "react";
 import "./dateFilter.scss";
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
+import { Dropdown } from "primereact/dropdown";
+import { Calendar } from "primereact/calendar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import dayjs from "dayjs";
 
 const DateFilter = ({ onDateChange }) => {
-    const [selectedOption, setSelectedOption] = useState("Last Month");
-    const [fromDate, setFromDate] = useState(dayjs('2025-08-01'));
-    const [toDate, setToDate] = useState(dayjs('2025-08-31'));
-    const [openPicker, setOpenPicker] = useState(false);
-
-    const iconRef = useRef(null); // anchor for Popper
-
     const filterOptions = [
-        "Today", "Yesterday", "This Week", "Last Week",
-        "This Month", "Last Month", "This Quarter", "Last Quarter",
-        "This Year", "Last Year"
+        { label: "Today", value: "Today" },
+        { label: "Yesterday", value: "Yesterday" },
+        { label: "This Week", value: "This Week" },
+        { label: "Last Week", value: "Last Week" },
+        { label: "This Month", value: "This Month" },
+        { label: "Last Month", value: "Last Month" },
+        { label: "This Quarter", value: "This Quarter" },
+        { label: "Last Quarter", value: "Last Quarter" },
+        { label: "This Year", value: "This Year" },
+        { label: "Last Year", value: "Last Year" }
     ];
 
-    const handleOptionChange = (event, value) => {
+    const [selectedOption, setSelectedOption] = useState(filterOptions[5]); // Last Month
+    const [fromDate, setFromDate] = useState(dayjs("2025-08-01").toDate());
+    const [toDate, setToDate] = useState(dayjs("2025-08-31").toDate());
+    const [showCalendar, setShowCalendar] = useState(false);
+    const calendarRef = useRef(null);
+
+    const handleOptionChange = (e) => {
+        const value = e.value;
         setSelectedOption(value);
 
-        let newFrom = dayjs('2025-09-01');
-        let newTo = dayjs('2025-09-22');
+        let newFrom = dayjs("2025-09-01");
+        let newTo = dayjs("2025-09-22");
 
-        if (value === "Last Month") {
-            newFrom = dayjs('2025-08-01');
-            newTo = dayjs('2025-08-31');
+        if (value.value === "Last Month") {
+            newFrom = dayjs("2025-08-01");
+            newTo = dayjs("2025-08-31");
         }
+        setFromDate(newFrom.toDate());
+        setToDate(newTo.toDate());
 
-        setFromDate(newFrom);
-        setToDate(newTo);
         onDateChange && onDateChange({
-            from: newFrom.format('DD/MMM/YYYY'),
-            to: newTo.format('DD/MMM/YYYY')
+            from: newFrom.format("DD/MMM/YYYY"),
+            to: newTo.format("DD/MMM/YYYY")
         });
     };
 
-    return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <div className="dateFilterContainer">
-                <div className="selectWrapper">
-                    <Autocomplete
-                        disablePortal
-                        options={filterOptions}
-                        value={selectedOption}
-                        onChange={handleOptionChange}
-                        renderInput={(params) => (
-                            <TextField {...params} label="Select" size="small" />
-                        )}
-                        sx={{ width: 200 }}
-                    />
-                </div>
+    const selectedOptionTemplate = (option, props) => {
+        if (option) return <div>{option.label}</div>;
+        return <span>{props.placeholder}</span>;
+    };
 
-                <div className="dateBox">
-                    <span>{fromDate.format('DD/MMM/YYYY')} – {toDate.format('DD/MMM/YYYY')}</span>
-                    <div className="calendarWrapper" ref={iconRef}>
-                        <CalendarTodayIcon
-                            className="calendarIcon"
-                            onClick={() => setOpenPicker(true)}
-                        />
-                        {/* <DesktopDatePicker
-                            open={openPicker}
-                            onClose={() => setOpenPicker(false)}
-                            value={fromDate}
-                            onChange={(newValue) => {
-                                setFromDate(newValue);
-                                onDateChange && onDateChange({
-                                    from: newValue.format('DD/MMM/YYYY'),
-                                    to: toDate.format('DD/MMM/YYYY'),
-                                });
-                            }}
-                            PopperProps={{
-                                anchorEl: iconRef.current,
-                                placement: "bottom-end",
-                            }}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    sx={{
-                                        display: 'none',
-                                    }}
-                                />
-                            )}
-                        /> */}
-                    </div>
+    const optionTemplate = (option) => {
+        return <div>{option.label}</div>;
+    };
+
+    return (
+        <div className="dateFilterContainer">
+            <div className="selectWrapper">
+                <Dropdown
+                    value={selectedOption}
+                    options={filterOptions}
+                    onChange={handleOptionChange}
+                    optionLabel="label"
+                    placeholder="Filter By"
+                    className="p-dropdown-sm"
+                    style={{ width: "100%" }}
+                    valueTemplate={selectedOptionTemplate}
+                    itemTemplate={optionTemplate}
+                    filter
+                    filterPlaceholder="Search..."
+                />
+            </div>
+
+            <div className="dateBox">
+                <span>{dayjs(fromDate).format("DD/MMM/YYYY")} – {dayjs(toDate).format("DD/MMM/YYYY")}</span>
+                <div className="calendarWrapper">
+                    <FontAwesomeIcon
+                        icon={faCalendarAlt}
+                        className="calendarIcon"
+                        onClick={() => setShowCalendar(!showCalendar)}
+                    />
+                    {showCalendar && (
+                        <div className="calendarPopup">
+                            <Calendar
+                                value={[fromDate, toDate]}
+                                onChange={(e) => {
+                                    setFromDate(e.value[0]);
+                                    setToDate(e.value[1]);
+                                    onDateChange && onDateChange({
+                                        from: dayjs(e.value[0]).format("DD/MMM/YYYY"),
+                                        to: dayjs(e.value[1]).format("DD/MMM/YYYY")
+                                    });
+                                }}
+                                selectionMode="range"
+                                inline
+                                ref={calendarRef}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
-        </LocalizationProvider>
+        </div>
     );
 };
 

@@ -1,102 +1,108 @@
-import React from "react";
-import './navbar.scss'
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
-import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlined";
-import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import ChatBubbleOutlinedIcon from '@mui/icons-material/ChatBubbleOutlined';
-import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
+import React, { useContext } from "react";
+import './navbar.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faSearch,
+    faGlobe,
+    faMoon,
+    faSun,
+    faExpand,
+    faBell,
+    faCommentDots,
+    faList,
+    faPlusCircle,
+    faCog
+} from '@fortawesome/free-solid-svg-icons';
 import avatar from '../../../../assets/avatar.png';
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import Tooltip from "@mui/material/Tooltip";
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import { DarkModeContext } from "../../../shared/context/darkModeContext";
+import { Tooltip } from 'primereact/tooltip';
+import NotificationBox from "../../navbar-components/notification-box/NotificationBox";
+import MessagesBox from "../../navbar-components/message-box/Messages";
+import LanguageDropdown from "../../navbar-components/language-box/LanguageDropdown";
+import AddNewDropdown from "../../navbar-components/add-dropdown-box/AddNewDropdown";
 const Navbar = () => {
+    const { dispatch, darkMode } = useContext(DarkModeContext);
+
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    };
+
     return (
         <div className="navbar">
             <div className="wrapper">
+                {/* Search */}
                 <div className="search">
                     <input type="text" placeholder="Type here to search..." />
-                    <SearchOutlinedIcon className="search-icon" />
+                    <FontAwesomeIcon icon={faSearch} className="search-icon" />
+                    <Tooltip target=".search" content="Search" position="bottom" />
                 </div>
 
                 <div className="items">
                     {/* Language */}
-                    <Tooltip title="Language" arrow placement="bottom">
-                        <div className="item">
-                            <LanguageOutlinedIcon className="icon" />
-                            English
-                        </div>
-                    </Tooltip>
+                    <LanguageDropdown />
+
 
                     {/* Dark Mode */}
-                    <Tooltip title="Toggle Dark Mode" arrow placement="bottom">
-                        <div className="item">
-                            <DarkModeOutlinedIcon className="icon" />
-                        </div>
-                    </Tooltip>
+                    <div
+                        className="item"
+                        onClick={() => dispatch({ type: "TOGGLE" })}
+                    >
+                        {darkMode ? (
+                            <FontAwesomeIcon icon={faSun} className="icon" />
+                        ) : (
+                            <FontAwesomeIcon icon={faMoon} className="icon" />
+                        )}
+                        <Tooltip target=".item:nth-child(2)" content={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"} position="bottom" />
+                    </div>
 
                     {/* Fullscreen */}
-                    <Tooltip title="Fullscreen" arrow placement="bottom">
-                        <div className="item">
-                            <FullscreenExitOutlinedIcon className="icon" />
-                        </div>
-                    </Tooltip>
+                    <div className="item" onClick={toggleFullscreen}>
+                        <FontAwesomeIcon icon={faExpand} className="icon" />
+                        <Tooltip target=".item:nth-child(3)" content="Fullscreen" position="bottom" />
+                    </div>
 
                     {/* Notifications */}
-                    <Tooltip title="Notifications" arrow placement="bottom">
-                        <div className="item">
-                            <NotificationsNoneOutlinedIcon className="icon" />
-                            <div className="counter">1</div>
-                        </div>
-                    </Tooltip>
+                    <NotificationBox icon={faBell} tooltip="Notifications" />
+
 
                     {/* Chat / Messages */}
-                    <Tooltip title="Messages" arrow placement="bottom">
-                        <div className="item">
-                            <ChatBubbleOutlinedIcon className="icon" />
-                            <div className="counter">2</div>
-                        </div>
-                    </Tooltip>
+                    <MessagesBox icon={faCommentDots} tooltip="Messages" />
 
-                    {/* AI Button */}
-                    <Tooltip title="AI Assistant" arrow placement="bottom">
-                        <div className="item">
-                            <span className="text">AI</span>
-                            <AutoAwesomeIcon className="icon ai-icon" />
-                        </div>
-                    </Tooltip>
+                    {/* AI Assistant */}
+                    <div className="item">
+                        <span className="text">AI</span>
+                        <Tooltip target=".item:nth-child(6)" content="AI Assistant" position="bottom" />
+                    </div>
 
-                    {/* Add Button */}
-                    <Tooltip title="Add New" arrow placement="bottom">
-                        <div className="item">
-                            <AddCircleOutlineOutlinedIcon className="icon" />
-                        </div>
-                    </Tooltip>
+                    {/* Add New */}
+                    <AddNewDropdown />
+
 
                     {/* List/Menu */}
-                    <Tooltip title="Menu" arrow placement="bottom">
-                        <div className="item">
-                            <ListOutlinedIcon className="icon" />
-                        </div>
-                    </Tooltip>
-                    {/* Settings (New item added last) */}
-                    <Tooltip title="Settings" arrow placement="bottom">
-                        <div className="item">
-                            <SettingsOutlinedIcon className="icon" />
-                        </div>
-                    </Tooltip>
-                    {/* Avatar (Always last) */}
-                    <Tooltip title="Profile" arrow placement="bottom">
-                        <div className="item">
-                            <img src={avatar} className="avatar" alt="User Avatar" />
-                        </div>
-                    </Tooltip>
+                    <div className="item">
+                        <FontAwesomeIcon icon={faList} className="icon" />
+                        <Tooltip target=".item:nth-child(8)" content="Menu" position="bottom" />
+                    </div>
 
+                    {/* Settings */}
+                    <div className="item">
+                        <FontAwesomeIcon icon={faCog} className="icon" />
+                        <Tooltip target=".item:nth-child(9)" content="Settings" position="bottom" />
+                    </div>
+
+                    {/* Avatar */}
+                    <div className="item">
+                        <img src={avatar} className="avatar" alt="User Avatar" />
+                        <Tooltip target=".item:nth-child(10)" content="Profile" position="bottom" />
+                    </div>
                 </div>
             </div>
         </div>
-    )
-}
-export default Navbar
+    );
+};
+
+export default Navbar;

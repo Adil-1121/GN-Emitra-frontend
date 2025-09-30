@@ -1,55 +1,87 @@
-import React from "react";
-import "./chart.scss"
-import {
-    AreaChart,
-    Area,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    ResponsiveContainer
-} from 'recharts';
+import React, { useState, useEffect } from "react";
+import { Chart } from "primereact/chart";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChartLine } from "@fortawesome/free-solid-svg-icons";
+import "./chart.scss";
 
-const data = [
-    { name: 'January', total: 4000 },
-    { name: 'February', total: 3000 },
-    { name: 'March', total: 2000 },
-    { name: 'April', total: 2780 },
-    { name: 'May', total: 1890 },
-    { name: 'June', total: 2390 },
-];
+const ChartComponent = ({ title, height }) => {
+    const [chartData, setChartData] = useState({});
+    const [chartOptions, setChartOptions] = useState({});
 
-const Chart = ({ height, width, title }) => {
+    useEffect(() => {
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue("--text-color");
+        const textColorSecondary =
+            documentStyle.getPropertyValue("--text-color-secondary");
+        const surfaceBorder = documentStyle.getPropertyValue("--surface-border");
+
+        const data = {
+            labels: ["January", "February", "March", "April", "May", "June"],
+            datasets: [
+                {
+                    label: "Sales",
+                    data: [4000, 3000, 2000, 2780, 1890, 2390],
+                    fill: true,
+                    borderColor: documentStyle.getPropertyValue("--blue-500"),
+                    tension: 0.4,
+                    backgroundColor: "rgba(33, 150, 243, 0.2)",
+                },
+                {
+                    label: "Orders",
+                    data: [2400, 1398, 9800, 3908, 4800, 3800],
+                    fill: false,
+                    borderDash: [5, 5],
+                    borderColor: documentStyle.getPropertyValue("--green-500"),
+                    tension: 0.4,
+                },
+                {
+                    label: "Earnings",
+                    data: [2200, 3000, 2500, 2100, 2900, 3300],
+                    fill: false,
+                    borderColor: documentStyle.getPropertyValue("--orange-500"),
+                    tension: 0.4,
+                },
+            ],
+        };
+
+        const options = {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor,
+                    },
+                },
+            },
+            scales: {
+                x: {
+                    ticks: { color: textColorSecondary },
+                    grid: { color: surfaceBorder },
+                },
+                y: {
+                    ticks: { color: textColorSecondary },
+                    grid: { color: surfaceBorder },
+                },
+            },
+        };
+
+        setChartData(data);
+        setChartOptions(options);
+    }, []);
+
     return (
-        <div className="chart">
-            <div className="title">{title}</div>
-            <ResponsiveContainer width={width} height={height}>
-                {/*  */}
-                <AreaChart
-                    data={data}
-                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                >
-                    <defs>
-                        <linearGradient id="total" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                            <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-                        </linearGradient>
-                    </defs>
-                    <XAxis dataKey="name" stroke="gray" />
-                    <YAxis />
-                    <CartesianGrid strokeDasharray="3 3" className="chartGrid" />
-                    <Tooltip />
-                    <Area
-                        type="monotone"
-                        dataKey="total"
-                        stroke="#8884d8"
-                        fillOpacity={1}
-                        fill="url(#total)"
-                    />
-                </AreaChart>
-            </ResponsiveContainer>
+        <div className="chart card">
+            <div className="title">
+                <FontAwesomeIcon icon={faChartLine} /> {title}
+            </div>
+            <Chart
+                type="line"
+                data={chartData}
+                options={chartOptions}
+                style={{ width: "100%", height: height || "300px" }}
+            />
         </div>
     );
 };
 
-export default Chart;
+export default ChartComponent;

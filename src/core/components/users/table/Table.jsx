@@ -1,14 +1,13 @@
+import React, { useState } from "react";
 import "./table.scss";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { Button } from "primereact/button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEye } from "@fortawesome/free-solid-svg-icons";
 
 const List = () => {
-    const rows = [
+    const [data, setData] = useState([
         {
             id: 1143155,
             product: "Acer Nitro 5",
@@ -59,47 +58,49 @@ const List = () => {
             method: "Online Payment",
             status: "Pending",
         },
-    ];
+    ]);
+
+    const productBodyTemplate = (rowData) => (
+        <div className="cellWrapper">
+            <img src={rowData.img} alt={rowData.product} className="image" />
+            <span className="productName">{rowData.product}</span>
+        </div>
+    );
+
+    const statusBodyTemplate = (rowData) => (
+        <span className={`status ${rowData.status}`}>{rowData.status}</span>
+    );
+
+    const actionBodyTemplate = (rowData) => (
+        <div className="cellAction">
+            <Button
+                className="viewButton"
+                icon={<FontAwesomeIcon icon={faEye} />}
+                label="View"
+                onClick={() => console.log("View", rowData.id)}
+            />
+            <Button
+                className="deleteButton"
+                icon={<FontAwesomeIcon icon={faTrash} />}
+                label="Delete"
+                onClick={() => setData(data.filter((item) => item.id !== rowData.id))}
+            />
+        </div>
+    );
 
     return (
         <div className="table">
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell className="tableCell">Track Id</TableCell>
-                            <TableCell className="tableCell">Product</TableCell>
-                            <TableCell className="tableCell">Customer</TableCell>
-                            <TableCell className="tableCell">Date</TableCell>
-                            <TableCell className="tableCell">Amount</TableCell>
-                            <TableCell className="tableCell">Payment Method</TableCell>
-                            <TableCell className="tableCell">Status</TableCell>
-
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.id}>
-                                <TableCell className="tableCell">{row.id}</TableCell>
-
-                                <TableCell>
-                                    <div className="cellWrapper">
-                                        <img src={row.img} alt={row.product} className="image" />
-                                        {row.product}
-                                    </div>
-                                </TableCell>
-                                <TableCell className="tableCell">{row.customer}</TableCell>
-                                <TableCell className="tableCell" align="right">{row.date}</TableCell>
-                                <TableCell className="tableCell" align="right">{row.amount}</TableCell>
-                                <TableCell className="tableCell" align="right">{row.method}</TableCell>
-                                <TableCell className="tableCell" align="right"><span className={`status ${row.status}`}>{row.status}</span>
-                                </TableCell>
-
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer></div>
+            <DataTable value={data} paginator rows={5} responsiveLayout="scroll">
+                <Column field="id" header="Track Id" sortable filter></Column>
+                <Column header="Product" body={productBodyTemplate} sortable filter></Column>
+                <Column field="customer" header="Customer" sortable filter></Column>
+                <Column field="date" header="Date" sortable filter></Column>
+                <Column field="amount" header="Amount" sortable filter></Column>
+                <Column field="method" header="Payment Method" sortable filter></Column>
+                <Column header="Status" body={statusBodyTemplate} sortable filter></Column>
+                <Column header="Action" body={actionBodyTemplate}></Column>
+            </DataTable>
+        </div>
     );
 };
 

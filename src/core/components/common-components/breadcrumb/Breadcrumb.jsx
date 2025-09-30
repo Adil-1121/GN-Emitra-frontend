@@ -1,18 +1,43 @@
 import React from 'react';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { BreadCrumb } from 'primereact/breadcrumb';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import './breadcrumb.scss';
 
-const Breadcrumb = ({ items }) => {
+const BreadcrumbReact = ({ items }) => {
+    const navigate = useNavigate();
+
+    const model = items.map((item, index) => {
+        const isLast = index === items.length - 1;
+
+        if (typeof item === 'object' && item.label) {
+            return {
+                label: item.label,
+                command: !isLast && item.url ? () => navigate(item.url) : undefined,
+                className: isLast ? 'p-disabled' : '',
+            };
+        }
+
+        // For string items
+        return {
+            label: item,
+            className: isLast ? 'p-disabled' : '',
+        };
+    });
+
+
+    const separator = <FontAwesomeIcon icon={faChevronRight} className="custom-separator-icon" />;
+
     return (
-        <div className="breadcrumb">
-            {items.map((item, index) => (
-                <span key={index} className={index === items.length - 1 ? 'breadcrumbItem active' : 'breadcrumbItem'}>
-                    {item}
-                    {index !== items.length - 1 && <ChevronRightIcon className="separator" />}
-                </span>
-            ))}
+        <div className="breadcrumb-wrapper-prime">
+            <BreadCrumb
+                model={model}
+                className="prime-breadcrumb-custom"
+                separator={separator}
+            />
         </div>
     );
 };
 
-export default Breadcrumb;
+export default BreadcrumbReact;

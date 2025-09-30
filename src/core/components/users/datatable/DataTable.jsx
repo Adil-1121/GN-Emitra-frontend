@@ -1,46 +1,66 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import './datatable.scss';
-import { userColumns, userRows } from '../../../../datatablesource';
+import React, { useState } from "react";
+import "./datatable.scss";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { Button } from "primereact/button";
+import { userRows } from "../../../../datatablesource";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEye, faEdit } from "@fortawesome/free-solid-svg-icons";
 
+const DataTableComponent = () => {
+    const [data, setData] = useState(userRows);
 
-const DataTable = () => {
-    const actionColumn = [{
-        field: "action",
-        headerName: "Action",
-        width: 200,
-        renderCell: (params) => {
-            console.log("render action cell, params:", params);
-            return (
-                <div className='cellAction'>
-                    <Link to="/users/single" style={{ textDecoration: "none" }}>
+    const handleDelete = (id) => {
+        setData(data.filter((item) => item.id !== id));
+    };
 
-                        <div className="viewButton">View</div></Link>
-                    <div className="deleteButton">Delete</div>
-                </div>
-            )
-        }
-    }]
+    const userBodyTemplate = (rowData) => (
+        <div className="cellWithImg">
+            <img src={rowData.img} alt={rowData.userName} className="cellImg" />
+            {rowData.userName}
+        </div>
+    );
+
+    const statusBodyTemplate = (rowData) => (
+        <div className={`cellWithStatus ${rowData.status}`}>{rowData.status}</div>
+    );
+
+    const actionBodyTemplate = (rowData) => (
+        <div className="cellAction">
+            <Link to="/users/single" style={{ textDecoration: "none" }}>
+                <Button className="viewButton" icon={<FontAwesomeIcon icon={faEye} />} label="View" />
+            </Link>
+            <Link to={`/users/edit/${rowData.id}`} style={{ textDecoration: "none" }}>
+                <Button className="editButton" icon={<FontAwesomeIcon icon={faEdit} />} label="Edit" />
+            </Link>
+            <Button
+                className="deleteButton"
+                icon={<FontAwesomeIcon icon={faTrash} />}
+                label="Delete"
+                onClick={() => handleDelete(rowData.id)}
+            />
+        </div>
+    );
+
     return (
         <div className="datatable">
             <div className="dataTableTitle">
                 Add New User
-                <Link to="/users/new" style={{ textDecoration: "none" }} className="link">
+                <Link to="/users/new" className="link">
                     Add New
                 </Link>
             </div>
-            <DataGrid
-                rows={userRows}
-                columns={userColumns.concat(actionColumn)}
-                pageSizeOptions={[5, 10]}
-
-                pageSize={9}
-                rowPerPageOption={[9]}
-                checkboxSelection
-            />
+            <DataTable value={data} paginator rows={9} responsiveLayout="scroll">
+                <Column field="id" header="ID" sortable filter></Column>
+                <Column header="User" body={userBodyTemplate} sortable filter></Column>
+                <Column field="email" header="Email" sortable filter></Column>
+                <Column field="age" header="Age" sortable filter></Column>
+                <Column header="Status" body={statusBodyTemplate} sortable filter></Column>
+                <Column header="Action" body={actionBodyTemplate}></Column>
+            </DataTable>
         </div>
     );
 };
 
-export default DataTable;
+export default DataTableComponent;

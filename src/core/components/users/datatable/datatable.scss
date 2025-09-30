@@ -1,5 +1,4 @@
 .datatable {
-    height: 600px;
     padding: 20px;
 
     .dataTableTitle {
@@ -37,54 +36,72 @@
     }
 
     .cellWithStatus {
-        display: inline; // block se inline-flex better hai
-        align-items: center; // vertical center
+        display: inline-flex;
+        align-items: center;
         justify-content: center;
-        padding: 8px 30px;
-
+        padding: 8px 20px;
         border-radius: 5px;
         text-transform: capitalize;
         text-align: center;
 
         &.active {
-            background-color: rgba(0, 128, 0, 0.05);
+            background-color: rgba(0, 128, 0, 0.1);
             color: green;
         }
 
         &.pending {
-            background-color: rgba(255, 217, 0, 0.05);
+            background-color: rgba(255, 217, 0, 0.1);
             color: goldenrod;
         }
 
         &.inactive {
-            background-color: rgba(255, 0, 0, 0.05);
+            background-color: rgba(255, 0, 0, 0.1);
             color: crimson;
         }
     }
 
     .cellAction {
-        display: inline;
+        display: flex;
+        gap: 5px;
+
+        .viewButton,
+        .editButton,
+        .deleteButton {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 5px !important;
+            border-radius: 5px !important;
+            padding: 2px 5px !important;
+            cursor: pointer !important;
+        }
 
         .viewButton {
-            display: inline;
-            text-align: center;
-            margin: 5px;
-            padding: 2px 5px;
+            color: darkblue !important;
+            border: 1px dotted rgba(0, 0, 139, 0.6) !important;
+        }
 
-            border-radius: 5px;
-            color: darkblue;
-            border: 1px dotted rgba(0, 0, 139, 0.596);
-            cursor: pointer;
+        .editButton {
+            color: orange !important;
+            border: 1px dotted rgba(255, 165, 0, 0.6) !important;
         }
 
         .deleteButton {
-            display: inline;
-            margin: 5px;
-            padding: 2px 5px;
-            border-radius: 5px;
-            color: crimson;
-            border: 1px dotted rgba(220, 20, 60, 0.6);
-            cursor: pointer;
+            color: crimson !important;
+            border: 1px dotted rgba(220, 20, 60, 0.6) !important;
+        }
+
+        .p-button {
+            background: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 5px !important;
+            cursor: pointer !important;
+            border-radius: 5px !important;
+        }
+
+        .p-button:hover {
+            background: rgba(0, 0, 0, 0.05) !important;
         }
     }
+
 }

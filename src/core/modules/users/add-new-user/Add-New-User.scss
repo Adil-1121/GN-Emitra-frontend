@@ -2,14 +2,13 @@
     margin-left: 250px;
     display: flex;
     padding-top: 60px;
-    overflow-x: hidden; // Prevent horizontal scroll
+    overflow-x: hidden;
 
     .newContainer {
         flex: 6;
 
         .newTop,
         .newBottom {
-            -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
             box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
             padding: 10px;
             margin: 20px;
@@ -28,7 +27,7 @@
                     width: 100px;
                     height: 100px;
                     border-radius: 50%;
-                    object-fit: contain;
+                    object-fit: cover;
                 }
             }
 
@@ -44,13 +43,14 @@
                     .formInput {
                         width: 40%;
 
-                        lable {
+                        label {
                             display: flex;
                             align-items: center;
                             gap: 10px;
 
                             .icon {
                                 cursor: pointer;
+                                color: teal;
                             }
                         }
 
@@ -71,12 +71,9 @@
                         font-weight: bold;
                         margin-top: 10px;
                         cursor: pointer;
-
                     }
                 }
             }
         }
     }
-
-
 }

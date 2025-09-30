@@ -16,7 +16,6 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0; // Prevent shrinking when sidebar overflows
-        background-color: white;
         z-index: 1;
 
         .logo {
@@ -45,7 +44,6 @@
         flex: 1;
         overflow-y: auto;
         padding-left: 10px;
-        background-color: white;
 
         ul {
             list-style: none;
@@ -80,9 +78,7 @@
                 }
             }
 
-            .active {
-                background-color: #ece8ff;
-            }
+
 
             .icon {
                 font-size: 18px;

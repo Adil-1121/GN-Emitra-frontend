@@ -1,11 +1,10 @@
 import React from "react";
-import './single.scss'
-import Navbar from "../../components/common-components/navbar/navbar";
-import Sidebar from "../../components/common-components/sidebar/sidebar";
-import Breadcrumb from "../../components/common-components/breadcrumb/Breadcrumb";
-import Chart from "../../components/dashboard/chart/Chart"
-import List from "../../components/users/table/Table";
-
+import './View-User.scss'
+import Navbar from "../../../components/common-components/navbar/navbar";
+import Sidebar from "../../../components/common-components/sidebar/sidebar";
+import Breadcrumb from "../../../components/common-components/breadcrumb/Breadcrumb";
+import List from "../../../components/users/table/Table";
+import ChartComponent from "../../../components/dashboard/chart/Chart";
 const Single = () => {
     return (
         <div className="single">
@@ -43,7 +42,7 @@ const Single = () => {
 
                     </div>
                     <div className="right">
-                        <Chart height={210} width="100%" title="User Activity (Last 6 Months)" />
+                        <ChartComponent height={210} width="100%" title="User Activity (Last 6 Months)" />
                     </div>
                 </div>
                 <div className="singleBottom">
